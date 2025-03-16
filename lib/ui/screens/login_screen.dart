@@ -73,7 +73,9 @@ class LoginScreen extends StatelessWidget {
                     style: ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll<Color>(AppColor.primariaOne),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                        Navigator.pushReplacementNamed(context, "home");
+                    },
                     child: Text(
                       "Entrar",
                       style: TextStyle(color: AppColor.grayOne),

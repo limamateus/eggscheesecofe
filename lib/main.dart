@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'ui/screens/home_screen.dart';
 import 'ui/screens/login_screen.dart';
 
 void main() {
@@ -20,8 +21,9 @@ class EggsAndCheese extends StatelessWidget {
       ),
       routes: {
         "login": (context) =>  LoginScreen(),
+        "home": (context) =>  HomeScreen(),
       },
-        initialRoute: "login"
+        initialRoute: "home"
     );
   }
 }
