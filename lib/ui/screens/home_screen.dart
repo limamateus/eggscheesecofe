@@ -1,3 +1,6 @@
+import 'package:eggscheesecofe/models/product.dart';
+import 'package:eggscheesecofe/ui/components/card_product.dart';
+import 'package:eggscheesecofe/ui/components/detail_product.dart';
 import 'package:flutter/material.dart';
 
 import '../components/corouse_with_Indicator.dart';
@@ -148,85 +151,18 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: produtosPorCategoria[categoriaSelecionada]!.length,
               itemBuilder: (context, index) {
                 final produto =
-                produtosPorCategoria[categoriaSelecionada]![index];
+                ProductModel.fromJson(produtosPorCategoria[categoriaSelecionada]![index]);
 
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetalheScreen(item: produto),
+                        builder: (context) => DetailProdutct(product: produto),
                       ),
                     );
                   },
-                  child: Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            bottomLeft: Radius.circular(12),
-                          ),
-                          child: Expanded(
-                            child: Image.network(
-                              produto["imagem"]!,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  produto["titulo"]!,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  produto["descricao"]!,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 4),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "⏳ ${produto["tempo"]}",
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.orange,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-
-                        ),
-
-                      ],
-                    ),
-                  ),
+                  child: CardProduct(product: produto) ,
                 );
               },
             ),
@@ -238,42 +174,4 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class DetalheScreen extends StatelessWidget {
-  final Map<String, String> item;
 
-  const DetalheScreen({super.key, required this.item});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Detalhes: ${item["titulo"]}")),
-      body: Column(
-        children: [
-          Image.network(item["imagem"]!, width: double.infinity, height: 250, fit: BoxFit.cover),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item["titulo"]!,
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  item["descricao"]!,
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "⏳ Tempo de preparo: ${item["tempo"]}",
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.orange),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
